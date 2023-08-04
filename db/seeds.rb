@@ -8,6 +8,8 @@
 # db/seeds.rb
 
 Airport.delete_all
+Flight.delete_all
+User.delete_all
 
 airports_data = [
   { code: "LCA", name: "Larnaca" },
@@ -20,11 +22,16 @@ airports_data = [
 
 Airport.create!(airports_data)
 
-Flight.delete_all
+users_data = [
+  { email: "fede@sapu.com", password: "123456" },
+  { email: "fede2@sapu.com", password: "123456" },
+]
+
+User.create!(users_data)
 
 flights_data = [
-  { departure_airport_id: Airport.find_by(code: "LCA").id, arrival_airport_id: Airport.find_by(code: "LTN").id, start_datetime: DateTime.new(2023, 8, 10, 12, 30), flight_duration: 180 },
-  { departure_airport_id: Airport.find_by(code: "PFO").id, arrival_airport_id: Airport.find_by(code: "FRA").id, start_datetime: DateTime.new(2023, 8, 12, 15, 45), flight_duration: 240 },
+  { user_id: User.first.id, departure_airport_id: Airport.find_by(code: "LCA").id, arrival_airport_id: Airport.find_by(code: "LTN").id, start_datetime: DateTime.new(2023, 8, 10, 12, 30), flight_duration: 180 },
+  { user_id: User.second.id, departure_airport_id: Airport.find_by(code: "PFO").id, arrival_airport_id: Airport.find_by(code: "FRA").id, start_datetime: DateTime.new(2023, 8, 12, 15, 45), flight_duration: 240 },
 ]
 
 Flight.create!(flights_data)

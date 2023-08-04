@@ -35,6 +35,7 @@ gem "pry-rails"
 gem "byebug"
 gem "bootstrap", "~> 5.2", ">= 5.2.3"
 gem "jquery-rails"
+gem "factory_bot_rails", group: :test
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -82,4 +83,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
   gem "shoulda-matchers"
+  gem "factory_bot_rails"
 end
