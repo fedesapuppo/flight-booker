@@ -6,7 +6,18 @@
   <%= link_to "Login", new_user_session_path %>
   <%= link_to "Sign up", new_user_registration_path %>
 <% end %>
-<p>Find me in app/views/flights/index.html.erb</p>
+<h1>Flight Search</h1>
+<%= simple_form_for :flight_search, url: flights_path, method: :get do |f| %>
+  <div class="form-inputs">
+    <%= f.input :departure_airport, collection: Airport.all, label: "Departure Airport", include_blank: "Select Departure Airport" %>
+    <%= f.input :arrival_airport, collection: Airport.all, label: "Arrival Airport", include_blank: "Select Arrival Airport" %>
+    <%= f.input :passenger_count, collection: 1..4, label: "Number of Passengers", include_blank: "Select Number of Passengers" %>
+    <%= f.input :flight_date, collection: Flight.select(:start_datetime).distinct.pluck(:start_datetime).map(&:to_date), as: :select, label: "Flight Date", include_blank: "Select Flight Date" %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit, "Search Flights" %>
+  </div>
+<% end %>
 <% @flights.each do |flight| %>
   <p>Flight ID: <%= flight.id %></p>
   <p>Departure Airport: <%= flight.departure_airport.name %></p>
