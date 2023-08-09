@@ -1,0 +1,7 @@
+<%= form_for @booking do |f| %>
+  <%= f.hidden_field :flight_id, value: @flight.id %>
+  <%= f.hidden_field :passenger_count, value: @passenger_count %>
+  <p>Selected Flight: <%= @flight.start_datetime %> - <%= @flight.departure_airport.name %> to <%= @flight.arrival_airport.name %></p>
+  <p>Number of Passengers: <%= @passenger_count %></p>
+  <%= f.submit 'Proceed to Booking' %>
+<% end %>

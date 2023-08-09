@@ -1,5 +1,6 @@
 class FlightsController < ApplicationController
   def index
+    @booking = Booking.new
     @flight_search = FlightSearch.new(flight_search_params)
     @flights = Flight.all
     @flights = Flight.filter_by_departure_airport(@flight_search.departure_airport) if @flight_search.departure_airport.present?

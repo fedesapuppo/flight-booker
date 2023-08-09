@@ -2,8 +2,8 @@ class Flight < ApplicationRecord
   belongs_to :departure_airport, class_name: "Airport", foreign_key: "departure_airport_id"
   belongs_to :arrival_airport, class_name: "Airport", foreign_key: "arrival_airport_id"
 
-  has_many :flight_users
-  has_many :users, through: :flight_users, class_name: "User"
+  has_many :bookings
+  has_many :users, through: :bookings, class_name: "User"
 
   def self.filter_by_departure_airport(airport_id)
     where(departure_airport_id: airport_id)

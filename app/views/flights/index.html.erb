@@ -18,11 +18,17 @@
     <%= f.button :submit, "Search Flights" %>
   </div>
 <% end %>
-<% @flights.each do |flight|%>
-  <%= flight.inspect %>
-<%end%>
 <% @flights.each do |flight| %>
   <p>Flight ID: <%= flight.id %></p>
   <p>Departure Airport: <%= flight.departure_airport.name %></p>
   <p>Arrival Airport: <%= flight.arrival_airport.name %></p>
+<% end %>
+<%= simple_form_for @booking, url: new_booking_path, method: :get do |f| %>
+  <% @flights.each do |flight| %>
+    <%= f.radio_button :flight_id, flight.id %>
+    <%= flight.start_datetime %> - <%= flight.departure_airport.name %> to <%= flight.arrival_airport.name %>
+    <br>
+  <% end %>
+  <%= f.input_field :num_passengers, value: params[:passenger_count], as: :hidden %>
+  <%= f.button :submit, 'Select Flight' %>
 <% end %>
