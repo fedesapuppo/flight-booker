@@ -18,6 +18,9 @@
     <%= f.button :submit, "Search Flights" %>
   </div>
 <% end %>
+<% @flights.each do |flight|%>
+  <%= flight.inspect %>
+<%end%>
 <% @flights.each do |flight| %>
   <p>Flight ID: <%= flight.id %></p>
   <p>Departure Airport: <%= flight.departure_airport.name %></p>

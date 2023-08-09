@@ -10,4 +10,9 @@ RSpec.describe Flight, type: :model do
     it { should have_db_column(:departure_airport_id).of_type(:integer) }
     it { should have_db_column(:arrival_airport_id).of_type(:integer) }
   end
+
+  describe "associations" do
+    it { should have_many(:flight_users) }
+    it { should have_many(:users).through(:flight_users).class_name("User") }
+  end
 end

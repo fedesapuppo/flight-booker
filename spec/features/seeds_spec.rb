@@ -25,8 +25,8 @@ RSpec.feature "Seeds", type: :feature do
     User.create!(users_data)
 
     flights_data = [
-      { user_id: User.first.id, departure_airport_id: Airport.find_by(code: "LCA").id, arrival_airport_id: Airport.find_by(code: "LTN").id, start_datetime: DateTime.new(2023, 8, 10, 12, 30), flight_duration: 180 },
-      { user_id: User.second.id, departure_airport_id: Airport.find_by(code: "PFO").id, arrival_airport_id: Airport.find_by(code: "FRA").id, start_datetime: DateTime.new(2023, 8, 12, 15, 45), flight_duration: 240 },
+      { departure_airport_id: Airport.find_by(code: "LCA").id, arrival_airport_id: Airport.find_by(code: "LTN").id, start_datetime: DateTime.new(2023, 8, 10, 12, 30), flight_duration: 180 },
+      { departure_airport_id: Airport.find_by(code: "PFO").id, arrival_airport_id: Airport.find_by(code: "FRA").id, start_datetime: DateTime.new(2023, 8, 12, 15, 45), flight_duration: 240 },
     ]
 
     Flight.create!(flights_data)
@@ -36,6 +36,6 @@ RSpec.feature "Seeds", type: :feature do
     expect(Airport.count).to eq(6)
     expect(Flight.count).to eq(2)
     expect(User.count).to eq(2)
-    expect(User.second.flights.first.departure_airport.code).to eq("PFO")
+    expect(Flight.first.departure_airport.code).to eq("LCA")
   end
 end

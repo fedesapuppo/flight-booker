@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
     it { should validate_presence_of(:password) }
   end
   describe "associations" do
-    it { should have_many(:flights) }
+    it { should have_many(:flight_users) }
+    it { should have_many(:flights).through(:flight_users).class_name("Flight") }
   end
 end
