@@ -5,7 +5,7 @@ class FlightsController < ApplicationController
     @flights = @flights.where(departure_airport_id: @flight_search.departure_airport) if @flight_search.departure_airport.present?
     @flights = @flights.where(arrival_airport_id: @flight_search.arrival_airport) if @flight_search.arrival_airport.present?
     @flights = @flights.where(passenger_count: @flight_search.passenger_count) if @flight_search.passenger_count.present?
-    @flights = @flights.where(start_datetime: @flight_search.flight_date_datetime) if @flight_search.flight_date.present?
+    @flights = @flights.where("DATE(start_datetime) = ?", @flight_search.flight_date_datetime.to_date) if @flight_search.flight_date.present?
   end
 
   def show

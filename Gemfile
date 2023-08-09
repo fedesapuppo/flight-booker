@@ -35,7 +35,7 @@ gem "pry-rails"
 gem "byebug"
 gem "bootstrap", "~> 5.2", ">= 5.2.3"
 gem "jquery-rails"
-gem "factory_bot_rails", group: :test
+gem "rails-controller-testing"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
