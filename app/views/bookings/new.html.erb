@@ -1,7 +1,7 @@
-<%= form_for @booking do |f| %>
+<p>Selected Flight: <%= @flight.start_datetime %> - <%= @flight.departure_airport.name %> to <%= @flight.arrival_airport.name %></p>
+<h1>Confirm Number of Passengers</h1>
+<%= simple_form_for @booking, url: new_booking_path, method: :get do |f| %>
   <%= f.hidden_field :flight_id, value: @flight.id %>
-  <%= f.hidden_field :passenger_count, value: @passenger_count %>
-  <p>Selected Flight: <%= @flight.start_datetime %> - <%= @flight.departure_airport.name %> to <%= @flight.arrival_airport.name %></p>
-  <p>Number of Passengers: <%= @passenger_count %></p>
-  <%= f.submit 'Proceed to Booking' %>
+  <%= f.input :num_passengers, collection: 1..4, label: "Number of Passengers:", selected: @passenger_count %>
+  <%= f.button :submit, 'Continue to Booking' %>
 <% end %>

@@ -5,7 +5,6 @@ class FlightsController < ApplicationController
     @flights = Flight.all
     @flights = Flight.filter_by_departure_airport(@flight_search.departure_airport) if @flight_search.departure_airport.present?
     @flights = Flight.filter_by_arrival_airport(@flight_search.arrival_airport) if @flight_search.arrival_airport.present?
-    @flights = Flight.filter_by_passangers(@flight_search.passenger_count) if @flight_search.passenger_count.present?
     @flights = Flight.filter_by_date(@flight_search.flight_date_datetime) if @flight_search.flight_date.present?
   end
 

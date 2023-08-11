@@ -7,12 +7,7 @@ class BookingsController < ApplicationController
       return
     end
 
-    @booking = Booking.new(flight: @flight, user: current_user)
-  end
-
-  def select_flight
-    @flight = Flight.find(params[:flight_id])
-    @booking = Booking.new(flight: @flight, user: current_user)
-    redirect_to new_booking_path
+    @passenger_count = params[:booking][:num_passengers].to_i
+    @booking = Booking.new(flight: @flight, user: current_user, num_passengers: @passenger_count)
   end
 end
