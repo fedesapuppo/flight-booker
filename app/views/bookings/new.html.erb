@@ -3,15 +3,13 @@
   <% passenger_count = @passenger_count || 1 %>
   <%= f.hidden_field :flight_id, value: @flight.id %>
   <%= f.input :num_passengers, as: :hidden, input_html: { value: passenger_count } %>
-  <% passenger_count.times do |index| %>
-    <%= f.fields_for :passengers, @booking.passengers[index] || Passenger.new, index: index do |passenger_fields| %>
-      <div class="passenger-fields">
-        <%= passenger_fields.label :name, "Passenger #{index + 1} Name" %>
-        <%= passenger_fields.text_field :name %>
-        <%= passenger_fields.label :email, "Passenger #{index + 1} Email" %>
-        <%= passenger_fields.email_field :email %>
-      </div>
-    <% end %>
+  <%= f.fields_for :passengers do |passenger_fields| %>
+    <div class="passenger-fields">
+      <%= passenger_fields.label :name, "Passenger Name" %>
+      <%= passenger_fields.text_field :name %>
+      <%= passenger_fields.label :email, "Passenger Email" %>
+      <%= passenger_fields.email_field :email %>
+    </div>
   <% end %>
   <%= f.button :submit, 'Continue to Booking' %>
 <% end %>
