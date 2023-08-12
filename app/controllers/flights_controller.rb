@@ -1,4 +1,6 @@
 class FlightsController < ApplicationController
+  before_action :set_search_flag, only: :index
+
   def index
     @booking = Booking.new
     @flight_search = FlightSearch.new(flight_search_params)
@@ -16,5 +18,9 @@ class FlightsController < ApplicationController
 
   def flight_search_params
     params.fetch(:flight_search, {}).permit(:departure_airport, :arrival_airport, :passenger_count, :flight_date)
+  end
+
+  def set_search_flag
+    @search_performed = params[:flight_search].present?
   end
 end

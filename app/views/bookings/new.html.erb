@@ -1,7 +1,17 @@
-<p>Selected Flight: <%= @flight.start_datetime %> - <%= @flight.departure_airport.name %> to <%= @flight.arrival_airport.name %></p>
-<h1>Confirm Number of Passengers</h1>
-<%= simple_form_for @booking, url: new_booking_path, method: :get do |f| %>
+<%= simple_form_for @booking, url: bookings_path, method: :post do |f| %>
+  <p>Selected Flight: <%= @flight.start_datetime %> - <%= @flight.departure_airport.name %> to <%= @flight.arrival_airport.name %></p>
+  <% passenger_count = @passenger_count || 1 %>
   <%= f.hidden_field :flight_id, value: @flight.id %>
-  <%= f.input :num_passengers, collection: 1..4, label: "Number of Passengers:", selected: @passenger_count %>
+  <%= f.input :num_passengers, as: :hidden, input_html: { value: passenger_count } %>
+  <% passenger_count.times do |index| %>
+    <%= f.fields_for :passengers, @booking.passengers[index] || Passenger.new, index: index do |passenger_fields| %>
+      <div class="passenger-fields">
+        <%= passenger_fields.label :name, "Passenger #{index + 1} Name" %>
+        <%= passenger_fields.text_field :name %>
+        <%= passenger_fields.label :email, "Passenger #{index + 1} Email" %>
+        <%= passenger_fields.email_field :email %>
+      </div>
+    <% end %>
+  <% end %>
   <%= f.button :submit, 'Continue to Booking' %>
 <% end %>

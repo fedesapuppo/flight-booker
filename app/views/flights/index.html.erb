@@ -1,4 +1,3 @@
-<h1>Flights#index</h1>
 <% if current_user %>
   <p> Logged in as <%= current_user.email %></p>
   <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %>
@@ -11,19 +10,23 @@
   <div class="form-inputs">
     <%= f.input :departure_airport, collection: Airport.all, label: "Departure Airport", include_blank: "Select Departure Airport" %>
     <%= f.input :arrival_airport, collection: Airport.all, label: "Arrival Airport", include_blank: "Select Arrival Airport" %>
-    <%= f.input :passenger_count, collection: 1..4, label: "Number of Passengers", include_blank: "Select Number of Passengers" %>
+    <%= f.input :passenger_count, collection: 1..4, label: "Number of Passengers", include_blank: false, input_html: { value: 1 } %>
     <%= f.input :flight_date, collection: Flight.select(:start_datetime).distinct.pluck(:start_datetime).map(&:to_date), as: :select, label: "Flight Date", include_blank: "Select Flight Date" %>
   </div>
   <div class="form-actions">
     <%= f.button :submit, "Search Flights" %>
   </div>
 <% end %>
-<%= simple_form_for @booking, url: new_booking_path, method: :get do |f| %>
-  <% @flights.each do |flight| %>
-    <%= f.radio_button :flight_id, flight.id %>
-    <%= flight.start_datetime %> - <%= flight.departure_airport.name %> to <%= flight.arrival_airport.name %>
-    <br>
+<% if @search_performed %>
+  <%= simple_form_for @booking, url: new_booking_path, method: :get do |f| %>
+    <% @flights.each do |flight| %>
+      <%= f.radio_button :flight_id, flight.id %>
+      <%= flight.start_datetime %> - <%= flight.departure_airport.name %> to <%= flight.arrival_airport.name %>
+      <br>
+    <% end %>
+    <%= f.input_field :num_passengers, value: params.dig(:flight_search, :passenger_count), as: :hidden %>
+    <%= f.button :submit, 'Select Flight' %>
   <% end %>
-  <%= f.input_field :num_passengers, value: params.dig(:flight_search, :passenger_count), as: :hidden%>
-  <%= f.button :submit, 'Select Flight' %>
+<% else %>
+  <p>Please perform a flight search first to select a flight.</p>
 <% end %>
